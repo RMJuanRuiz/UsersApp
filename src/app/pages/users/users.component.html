@@ -1,0 +1,78 @@
+<div class="users-container animate__animated animate__fadeIn animate__faster">
+  <div class="d-flex justify-content-between align-items-center">
+    <h1 class="mb-0">Users <small>list</small></h1>
+
+    <div>
+      <button
+        routerLink="/user/new"
+        class="btn btn-primary d-flex align-items-center"
+      >
+        <span class="material-icons mr-2"> add </span>
+        Add
+      </button>
+    </div>
+  </div>
+</div>
+<hr />
+
+<table
+  *ngIf="!loading && users.length > 0"
+  class="table mt-2 animate__animated animate__fadeIn animate__faster"
+>
+  <thead>
+    <tr>
+      <th class="text-center" scope="col">#</th>
+      <th class="text-center" scope="col">Name</th>
+      <th class="text-center" scope="col">Username</th>
+      <th class="text-center" scope="col">Status</th>
+      <th class="text-center" scope="col">Tools</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users; let i = index">
+      <th class="text-center" scope="row">{{ i + 1 }}</th>
+      <td class="text-center">{{ user.name }}</td>
+      <td class="text-center">{{ user.username }}</td>
+      <td class="text-center">
+        <label *ngIf="user.status" class="badge badge-success py-2 px-3"
+          >Active</label
+        >
+        <label *ngIf="!user.status" class="badge badge-danger py-2 px-3"
+          >Inactive</label
+        >
+      </td>
+      <td class="text-center">
+        <button
+          class="btn btn-info mr-1 p-1 d-inline-flex align-items-center"
+          [routerLink]="['/user', user.id]"
+        >
+          <span class="material-icons"> create </span>
+        </button>
+        <button
+          class="btn btn-danger p-1 d-inline-flex align-items-center"
+          (click)="deleteUser(user, i)"
+        >
+          <span class="material-icons"> delete </span>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div
+  *ngIf="!loading && users.length === 0"
+  class="alert alert-warning text-center mt-3"
+>
+  <h4 class="alert-heading">No users yet</h4>
+  <span class="material-icons"> announcement </span>
+  <p>Try adding a new user</p>
+</div>
+
+<div
+  *ngIf="loading"
+  class="alert alert-info text-center mt-3 animate__animated animate__fadeIn animate__faster"
+>
+  <h4 class="alert-heading">Loading</h4>
+  <span class="material-icons"> hourglass_bottom </span>
+  <p>Wait please...</p>
+</div>
